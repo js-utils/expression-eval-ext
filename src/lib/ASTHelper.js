@@ -10,6 +10,7 @@ class ASTHelper {
 
 	reCompute () {
 		this.astSplitArray = this.toArray(this.ast)
+		this.expressionSplitArray = []
 		this.expression = this.toExpression(this.astSplitArray, true)
 	}
 	toArray (ast) {
@@ -63,6 +64,7 @@ class ASTHelper {
 				const leftExpression = this.toExpression(cLayer.left)
 				const rightExpression =  this.toExpression(cLayer.right)
 				expression = `${leftExpression}${cLayer.operator}${rightExpression}`
+				this.expressionSplitArray.push(leftExpression, cLayer.operator, rightExpression)
 				if (!entry) {
 					expression = `(${expression})`
 				}

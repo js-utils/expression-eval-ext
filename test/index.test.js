@@ -49,6 +49,7 @@ describe('ASTHelper test', function() {
 	it(`object.getKey('key') + object.key + 2 * 2 * 3`, async function(done) {
 		const ast = parse(`object.getKey('key') + object.key + 2 * 2 * 3`)
 		const astHelper = new ASTHelper(ast)
+		// console.log(astHelper.expressionSplitArray)
 		expect(astHelper.expression).to.be.equal(`(object.getKey('key')+object.key)+((2*2)*3)`)
 		done()
 	})
