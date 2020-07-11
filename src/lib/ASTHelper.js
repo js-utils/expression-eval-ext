@@ -1,7 +1,6 @@
 class ASTHelper {
 	constructor (ast) {
 		this.ast = ast
-		this.reCompute()
 	}
 	get ast () { return this._ast }
 	set ast (val) {
@@ -10,8 +9,8 @@ class ASTHelper {
 	}
 
 	reCompute () {
-		this.flattenArray = this.toArray(this.ast)
-		this.expression = this.toExpression(this.flattenArray, true)
+		this.astSplitArray = this.toArray(this.ast)
+		this.expression = this.toExpression(this.astSplitArray, true)
 	}
 	toArray (ast) {
 		const tags = []
@@ -56,12 +55,14 @@ class ASTHelper {
 		}
 		return tags.reverse()
 	}
-	toExpression (flattenArray, entry) {
+	toExpression (astSplitArray, entry) {
 		let expression = ''
-		// console.log('flattenArray', flattenArray)
-		for(const cLayer of flattenArray) {
+		// console.log('astSplitArray', astSplitArray)
+		for(const cLayer of astSplitArray) {
 			if (cLayer.type === 'BinaryExpression') {
-				expression = `${this.toExpression(cLayer.left)}${cLayer.operator}${this.toExpression(cLayer.right)}`
+				const leftExpression = this.toExpression(cLayer.left)
+				const rightExpression =  this.toExpression(cLayer.right)
+				expression = `${leftExpression}${cLayer.operator}${rightExpression}`
 				if (!entry) {
 					expression = `(${expression})`
 				}
